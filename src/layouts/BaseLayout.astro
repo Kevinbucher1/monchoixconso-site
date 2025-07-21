@@ -1,29 +1,6 @@
 ---
 import Footer from '../components/Footer.astro';
-
-// On ajoute "showFooter = true" : la page recevra une instruction, et si elle n'en reçoit pas, elle affichera le footer par défaut.
-const { pageTitle, showFooter = true } = Astro.props; 
+const { showFooter = true } = Astro.props;
 ---
-<html lang="fr">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{pageTitle} | monchoixconso.com</title>
-</head>
-<body>
-    <main>
-        <slot />
-    </main>
-
-    {/* On ajoute une condition : "N'afficher le footer QUE SI showFooter est vrai" */}
-    {showFooter && <Footer />} 
-</body>
-</html>
-<style is:global>
-    body {
-        font-family: system-ui, sans-serif;
-        margin: 0;
-    }
-</style>
+<slot />
+{showFooter && <Footer />}

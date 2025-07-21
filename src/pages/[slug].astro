@@ -1,29 +1,25 @@
 ---
-// Étape 1 : Importer les outils nécessaires
-// CORRECTION : On s'assure que le nom du fichier est correct (pas d'espace)
-import BaseLayout from '../layouts/BaseLayout.astro'; 
-
-// CORRECTION : On utilise le bon nom de fonction, "getPages"
+import BaseLayout from '../layouts/BaseLayout.astro';
 import { getPages } from '../lib/strapi';
 
-// Étape 2 : Définir les chemins de toutes les pages à créer
 export async function getStaticPaths() {
-    // CORRECTION : On ajoute "?? []" pour la robustesse
-    const pages = await getPages() ?? []; 
+    const pages = await getPages() ?? [];
 
-    // Pour le débogage, si besoin
-    console.log('Données reçues de Strapi:', JSON.stringify(pages, null, 2));
+    // Ligne de débogage pour voir ce que Netlify reçoit VRAIMENT
+    console.log('DONNÉES REÇUES PAR getStaticPaths:', JSON.stringify(pages, null, 2));
+
+    if (!Array.isArray(pages)) {
+        console.error("Les données reçues de Strapi ne sont pas un tableau. Construction impossible.");
+        return [];
+    }
 
     return pages.map((page) => ({
         params: { slug: page.slug },
         props: { page },
     }));
 }
-
-// Étape 3 : Récupérer les données pour CETTE page spécifique
 const { page } = Astro.props;
 ---
-
 <BaseLayout pageTitle={page.slug} showFooter={page.afficher_footer}>
     <Fragment set:html={page.contenu} />
 </BaseLayout>

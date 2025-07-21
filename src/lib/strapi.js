@@ -14,8 +14,7 @@ export async function getPages() {
   };
 
   try {
-    const response = await fetch(`${STRAPI_URL}/api/pages?populate=*`, fetchOptions);
-
+const response = await fetch(`${STRAPI_URL}/api/lp-gazelecs?populate=*`, fetchOptions);
     if (!response.ok) {
       console.error("Erreur de l'API Strapi:", response.status, response.statusText);
       const errorBody = await response.text();

@@ -3,13 +3,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 // Assurez-vous que le chemin vers votre fonction strapi est correct
 
-// MODIFICATION 1 : On utilise "getPages" pour correspondre au fichier strapi.js
-import { getPages } from '../lib/strapi';
+// MODIFICATION : On utilise "getLandingPages" pour correspondre au vrai nom dans votre fichier strapi.js
+import { getLandingPages } from '../lib/strapi';
 
 // Étape 2 : Définir les chemins de toutes les pages à créer
 export async function getStaticPaths() {
-    // On appelle bien "getPages()"
-    const pages = await getPages() ?? []; // J'ajoute ?? [] par sécurité pour éviter un crash si l'API ne répond rien
+    // On appelle bien "getLandingPages()"
+    const pages = await getLandingPages() ?? []; // On garde la sécurité ?? []
     
     return pages.map((page) => ({
         params: { slug: page.slug },
@@ -21,7 +21,7 @@ export async function getStaticPaths() {
 const { page } = Astro.props;
 ---
 
-{/* MODIFICATION 2 : On ajoute la propriété "showFooter" */}
+{/* La propriété "showFooter" est bien présente */}
 <BaseLayout pageTitle={page.slug} showFooter={page.afficher_footer}>
     <div set:html={page.contenu} />
 </BaseLayout>

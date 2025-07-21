@@ -1,24 +1,29 @@
 ---
 // Étape 1 : Importer les outils nécessaires
-import BaseLayout from '../layouts/BaseLayout.astro';
-// Assurez-vous que le chemin vers votre fonction strapi est correct
-import { getLandingPages } from '../lib/strapi';
+// CORRECTION : On s'assure que le nom du fichier est correct (pas d'espace)
+import BaseLayout from '../layouts/BaseLayout.astro'; 
+
+// CORRECTION : On utilise le bon nom de fonction, "getPages"
+import { getPages } from '../lib/strapi';
 
 // Étape 2 : Définir les chemins de toutes les pages à créer
 export async function getStaticPaths() {
-  const pages = await getLandingPages(); // Récupère toutes les pages
-  // On adapte le code à la structure "plate" (sans .attributes)
-  return pages.map((page) => ({
-    params: { slug: page.slug }, // CHANGEMENT ICI
-    props: { page },
-  }));
+    // CORRECTION : On ajoute "?? []" pour la robustesse
+    const pages = await getPages() ?? []; 
+
+    // Pour le débogage, si besoin
+    console.log('Données reçues de Strapi:', JSON.stringify(pages, null, 2));
+
+    return pages.map((page) => ({
+        params: { slug: page.slug },
+        props: { page },
+    }));
 }
 
 // Étape 3 : Récupérer les données pour CETTE page spécifique
 const { page } = Astro.props;
 ---
 
-{/* On passe la valeur de la case à cocher de Strapi à notre layout */}
 <BaseLayout pageTitle={page.slug} showFooter={page.afficher_footer}>
     <Fragment set:html={page.contenu} />
 </BaseLayout>

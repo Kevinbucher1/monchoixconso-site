@@ -1,7 +1,8 @@
 ---
-// import Footer from '../components/Footer.astro'; // CETTE LIGNE EST IGNORÉE CAR ELLE EST EN COMMENTAIRE
+import Footer from '../components/Footer.astro';
 
-const { pageTitle } = Astro.props;
+// On ajoute "showFooter = true" : la page recevra une instruction, et si elle n'en reçoit pas, elle affichera le footer par défaut.
+const { pageTitle, showFooter = true } = Astro.props; 
 ---
 <html lang="fr">
 <head>
@@ -15,10 +16,12 @@ const { pageTitle } = Astro.props;
     <main>
         <slot />
     </main>
-    </body>
+
+    {/* On ajoute une condition : "N'afficher le footer QUE SI showFooter est vrai" */}
+    {showFooter && <Footer />} 
+</body>
 </html>
 <style is:global>
-    /* Styles globaux */
     body {
         font-family: system-ui, sans-serif;
         margin: 0;

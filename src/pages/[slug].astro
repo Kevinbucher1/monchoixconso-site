@@ -18,4 +18,7 @@ export async function getStaticPaths() {
 const { page } = Astro.props;
 ---
 
-<BaseLayout pageTitle={page.slug}>  <div set:html={page.content} /> </BaseLayout>
+{/* On passe la valeur de la case à cocher de Strapi à notre layout */}
+<BaseLayout pageTitle={page.attributes.slug} showFooter={page.attributes.afficher_footer}>
+    <Fragment set:html={page.attributes.contenu} />
+</BaseLayout>

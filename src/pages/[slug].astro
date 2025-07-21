@@ -1,14 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+// On importe bien "getPages", qui correspond au nom dans strapi.js
 import { getPages } from '../lib/strapi';
 
 export async function getStaticPaths() {
+    // On ajoute ?? [] pour la sécurité, au cas où l'API ne renvoie rien
     const pages = await getPages() ?? [];
+
     return pages.map((page) => ({
         params: { slug: page.slug },
         props: { page },
     }));
 }
+
 const { page } = Astro.props;
 ---
 <BaseLayout showFooter={page.afficher_footer}>

@@ -1,6 +1,7 @@
 const STRAPI_URL = import.meta.env.STRAPI_URL;
 const STRAPI_API_KEY = import.meta.env.STRAPI_API_KEY;
 
+// On nomme la fonction "getPages"
 export async function getPages() {
   if (!STRAPI_URL || !STRAPI_API_KEY) {
     console.error("Erreur: STRAPI_URL ou STRAPI_API_KEY n'est pas défini dans les variables d'environnement.");
@@ -14,7 +15,9 @@ export async function getPages() {
   };
 
   try {
-const response = await fetch(`${STRAPI_URL}/api/lp-gazelecs?populate=*`, fetchOptions);
+    // On s'assure que l'URL est la bonne : /api/lp-gazelecs
+    const response = await fetch(`${STRAPI_URL}/api/lp-gazelecs?populate=*`, fetchOptions);
+
     if (!response.ok) {
       console.error("Erreur de l'API Strapi:", response.status, response.statusText);
       const errorBody = await response.text();

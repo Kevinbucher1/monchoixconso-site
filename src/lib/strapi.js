@@ -1,7 +1,7 @@
 const STRAPI_URL = import.meta.env.STRAPI_URL;
 const STRAPI_API_KEY = import.meta.env.STRAPI_API_KEY; // On récupère la nouvelle clé
 
-export async function getLandingPages() {
+export async function getPages() {
   // On prépare les en-têtes de la requête
   const fetchOptions = {
     headers: {

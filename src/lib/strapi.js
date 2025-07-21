@@ -1,13 +1,8 @@
 const STRAPI_URL = import.meta.env.STRAPI_URL;
-const STRAPI_API_KEY = import.meta.env.STRAPI_API_KEY;
+const STRAPI_API_KEY = import.meta.env.STRAPI_API_KEY; // On récupère la nouvelle clé
 
-// On nomme la fonction "getPages"
-export async function getPages() {
-  if (!STRAPI_URL || !STRAPI_API_KEY) {
-    console.error("Erreur: STRAPI_URL ou STRAPI_API_KEY n'est pas défini dans les variables d'environnement.");
-    return null;
-  }
-
+export async function getLandingPages() {
+  // On prépare les en-têtes de la requête
   const fetchOptions = {
     headers: {
       Authorization: `Bearer ${STRAPI_API_KEY}`,
@@ -15,21 +10,21 @@ export async function getPages() {
   };
 
   try {
-    // On s'assure que l'URL est la bonne : /api/lp-gazelecs
-    const response = await fetch(`${STRAPI_URL}/api/lp-gazelecs?populate=*`, fetchOptions);
+    // On ajoute les options au fetch
+    const response = await fetch(`${STRAPI_URL}/api/lp-gazelecs`, fetchOptions);
 
     if (!response.ok) {
-      console.error("Erreur de l'API Strapi:", response.status, response.statusText);
+      console.error("Erreur de réseau ou du serveur Strapi:", response.status, response.statusText);
       const errorBody = await response.text();
-      console.error("Détails de l'erreur:", errorBody);
+      console.error("Corps de l'erreur:", errorBody);
       return null;
     }
 
     const data = await response.json();
-    return data.data;
+    return data.data; // On renvoie la liste qui se trouve dans la clé "data"
 
   } catch (error) {
-    console.error("Impossible de contacter l'API Strapi:", error);
+    console.error("Impossible de fetch les données de Strapi:", error);
     return null;
   }
 }

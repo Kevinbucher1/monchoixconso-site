@@ -19,6 +19,6 @@ const { page } = Astro.props;
 ---
 
 {/* On passe la valeur de la case à cocher de Strapi à notre layout */}
-<BaseLayout pageTitle={page.attributes.slug} showFooter={page.attributes.afficher_footer}>
-    <Fragment set:html={page.attributes.contenu} />
+<BaseLayout pageTitle={page.slug} showFooter={page.afficher_footer}>
+    <Fragment set:html={page.contenu} />
 </BaseLayout>

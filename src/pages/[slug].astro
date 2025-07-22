@@ -1,27 +1,53 @@
 ---
-// Étape 1 : Importer les outils nécessaires
-import BaseLayout from '../layouts/BaseLayout.astro';
-// Assurez-vous que le chemin vers votre fonction strapi est correct
+// On importe le Footer directement ici
+import Footer from '../components/Footer.astro';
+import { getPages } from '../lib/strapi';
 
-// MODIFICATION : On utilise "getLandingPages" pour correspondre au vrai nom dans votre fichier strapi.js
-import { getLandingPages } from '../lib/strapi';
-
-// Étape 2 : Définir les chemins de toutes les pages à créer
 export async function getStaticPaths() {
-    // On appelle bien "getLandingPages()"
-    const pages = await getLandingPages() ?? []; // On garde la sécurité ?? []
-    
+    const pages = await getPages() ?? [];
     return pages.map((page) => ({
         params: { slug: page.slug },
         props: { page },
     }));
 }
-
-// Étape 3 : Récupérer les données pour CETTE page spécifique
 const { page } = Astro.props;
 ---
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{page.slug} | monchoixconso.com</title>
 
-{/* La propriété "showFooter" est bien présente */}
-<BaseLayout pageTitle={page.slug} showFooter={page.afficher_footer}>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16465363779"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-16465363779');
+    </script>
+
+    <script is:inline>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window,document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '963557524306737');
+    fbq('track', 'PageView');
+    </script>
+    <noscript>
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=963557524306737&ev=PageView&noscript=1"/>
+    </noscript>
+</head>
+<body>
     <div set:html={page.contenu} />
-</BaseLayout>
+
+    {page.afficher_footer && <Footer />}
+</body>
+</html>

@@ -1,7 +1,6 @@
 const STRAPI_URL = import.meta.env.STRAPI_URL;
 const STRAPI_API_KEY = import.meta.env.STRAPI_API_KEY;
 
-// On standardise le nom en "getPages"
 export async function getPages() {
   if (!STRAPI_URL || !STRAPI_API_KEY) {
     console.error("Erreur: STRAPI_URL ou STRAPI_API_KEY n'est pas défini.");

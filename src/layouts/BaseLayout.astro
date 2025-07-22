@@ -11,14 +11,14 @@ const { pageTitle, showFooter = true } = Astro.props;
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16465363779"></script>
-    <script>
+    <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'AW-16465363779');
     </script>
 
-    <script>
+    <script is:inline>
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -31,4 +31,21 @@ const { pageTitle, showFooter = true } = Astro.props;
     fbq('track', 'PageView');
     </script>
     <noscript>
-    <img height="1" width="1" style="display:none" src="
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=963557524306737&ev=PageView&noscript=1"/>
+    </noscript>
+    
+    <style is:global>
+        body {
+            font-family: system-ui, sans-serif;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <slot />
+    </main>
+    
+    {showFooter && <Footer />} 
+</body>
+</html>

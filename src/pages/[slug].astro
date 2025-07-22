@@ -1,6 +1,5 @@
 ---
-// On importe le Footer directement ici
-import Footer from '../components/Footer.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import { getPages } from '../lib/strapi';
 
 export async function getStaticPaths() {
@@ -12,42 +11,6 @@ export async function getStaticPaths() {
 }
 const { page } = Astro.props;
 ---
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>{page.slug} | monchoixconso.com</title>
-
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16465363779"></script>
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'AW-16465363779');
-    </script>
-
-    <script is:inline>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window,document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '963557524306737');
-    fbq('track', 'PageView');
-    </script>
-    <noscript>
-    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=963557524306737&ev=PageView&noscript=1"/>
-    </noscript>
-</head>
-<body>
+<BaseLayout pageTitle={page.slug} showFooter={page.afficher_footer}>
     <div set:html={page.contenu} />
-
-    {page.afficher_footer && <Footer />}
-</body>
-</html>
+</BaseLayout>

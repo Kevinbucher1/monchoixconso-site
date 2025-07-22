@@ -12,5 +12,5 @@ export async function getStaticPaths() {
 const { page } = Astro.props;
 ---
 <BaseLayout pageTitle={page.slug} showFooter={page.afficher_footer}>
-    <div set:html={page.contenu} />
+    <div set:html={page.content} />
 </BaseLayout>
